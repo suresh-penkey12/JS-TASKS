@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <h1 id="h"></h1>
+    <button id="btn1">ADD NEW USER</button>
+    <button id="btn2">SHOW USERS</button>
+    <button id="btn3">CLEAR USERS</button>
+    <script>
+        let users=[]
+        let counter=1
+        let btn1=document.getElementById("btn1")
+        let h=document.getElementById("h")
+        btn1.addEventListener("click",()=>{
+            let k=prompt("Enter user name: ")
+            users.push({"id":counter,"name":`${k}`,"email":`${k}@example.com`})
+            counter++;
+            window.alert("user added successfully")
+        })
+
+        let btn2=document.getElementById("btn2")
+        btn2.addEventListener("click",()=>{
+            console.log(users)
+            h.innerHTML=""
+            users.map((user)=>{
+                for(i in user){
+                    h.innerHTML += `${(user[i])+" "}`;
+                }
+            })
+        })
+
+        let btn3=document.getElementById("btn3")
+        btn3.addEventListener("click",()=>{
+            users=[]
+            h.innerHTML=""
+            console.log(users)
+        })
+    </script>
+</body>
+</html>

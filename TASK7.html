@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1 id="user">ihhuhhuh</h1>
+    <button id="btn">RESET</button>
+    <script>
+
+        let object1={
+          name:""
+        }
+
+        let object2={
+          visit:0
+        }
+
+
+        object1.__proto__=object2
+        
+        let user=document.getElementById("user")
+        let btn=document.getElementById("btn")
+
+        if(localStorage.getItem("username")){
+            let k=JSON.parse(localStorage.getItem("username"))
+            let login=trackLogin()
+            user.textContent=`HELLO ${k} THIS IS YOUR ${login} VISIT`
+
+        }
+        else{
+            window.location.reload();
+            let inp=prompt()
+            let input=inp.toUpperCase()
+            object1.name=input
+            localStorage.setItem("username",JSON.stringify(object1.name))
+        }
+      function getCookie(name) {
+        const cDecoded=decodeURIComponent(document.cookie)
+        let res=cDecoded.split("=")
+        return Number(res[1])
+      }
+
+
+      function setCookie(name, value, days) {
+        const date=new Date()
+        date.setTime(date.getTime()+(days+24*60*60*1000))
+        let expires=""
+        document.cookie=`${name}=${value} ; ${expires} ; path=/`
+      }
+
+      function deleteCookie(name){
+        document.cookie="loginCount=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      }
+
+
+      function trackLogin() {
+        object1.visit = getCookie("loginCount");
+
+        if (object1.visit) {
+          object1.visit = parseInt(object1.visit) + 1;
+        } else {
+          object1.visit = 1;
+        }
+
+        setCookie("loginCount", object1.visit, 30);
+
+        console.log("Login count:", object1.visit);
+        return object1.visit
+      }
+
+      btn.addEventListener("click",()=>{
+        localStorage.clear();
+        deleteCookie("loginCount")
+        window.location.reload();
+      })
+
+    </script>
+  </body>
+</html>

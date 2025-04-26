@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="trigger">
+    <script>
+        let trigger=document.querySelector("#trigger")
+
+        // debounce
+
+        mydebounce=function (fun,d){
+            let timer;
+            return function (...args){
+                clearInterval(timer)
+                timer=setTimeout(()=>{
+                    fun(...args)
+                },d)
+            }
+        }
+
+        const getData=()=>{
+            fetch("https://fakestoreapi.com/products")
+            .then(data=>data.json())
+            .then((res)=>{
+                let arr=res.map((val)=>{
+                    return val.title
+                })
+                console.log(arr)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        }
+
+        let debounce=mydebounce(()=>{
+            getData()
+        },500)
+
+        trigger.addEventListener("keyup",()=>{
+            debounce()
+        })
+
+
+        // trigger
+
+        mytrigger=function (fun,d){
+            let last;
+            return (...args)=>{
+              let now=new Date().getTime()
+              if(now-last<d){
+                return
+              }
+              last=now
+              return fun(...args)
+            }
+        }
+
+        let triggering=mytrigger(()=>{
+            console.log(trigger.value)
+        },300)
+
+        trigger.addEventListener("keyup",()=>{
+            triggering()
+        })
+    </script>
+</body>
+</html>

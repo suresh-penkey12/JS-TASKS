@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const cart = JSON.parse(localStorage.getItem("store")) || [];
+      const products = [
+        { name: "car", price: 5000, discount: 1000 },
+        { name: "bike", price: 4000, discount: 800 },
+        { name: "cycle", price: 3000, discount: 600 },
+      ];
+      var input = prompt("Enter a product name (car, bike, cycle):");
+      function purchase(input) {
+        let tax = 200;
+        for (i of products) {
+          for (j in i) {
+            if (input === i.name) {
+              let total = i.price + tax - i.discount;
+              return i.name + " price is " + total;
+            }
+          }
+        }
+      }
+      const item = purchase(input);
+      cart.push(item)
+      localStorage.setItem("store",JSON.stringify(cart))
+      console.log(localStorage.getItem("store"))
+    </script>
+  </body>
+</html>

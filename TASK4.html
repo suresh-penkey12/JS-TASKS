@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Employee Bonus Calculator</h1>
+    <script>
+        // data
+        let data=[{name:"Alice",salary:50000,bonus:6000}
+            ,{name:"Charlie",salary:60000,bonus:5000},
+            {name:"Bob",salary:45000,bonus:6000}
+        ]
+
+        // filter method
+        let filteredData=data.filter((val)=>{
+             return val.salary>45000
+        })
+
+        console.log(filteredData)
+
+        let bonus=[]
+
+        // call method
+        let profile=function () {
+            bonus.push(this.bonus)
+        }
+
+        filteredData.map((val)=>{
+            profile.call(val)
+        })
+        
+        // reduce method
+        let total=bonus.reduce((val,acc)=>{
+            return val+acc
+        })
+        console.log(total)
+    </script>
+</body>
+</html>
